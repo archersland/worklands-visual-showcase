@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>WorkLands · Visualizador de UI e Assets</title>
+<style>
+:root{font:16px/1.45 system-ui,-apple-system,Segoe UI,sans-serif;color:#edf3ee;background:#11191b}
+*{box-sizing:border-box}body{margin:0}main{max-width:1440px;margin:auto;padding:clamp(12px,3vw,36px)}
+h1{font-size:clamp(1.4rem,3vw,2rem);margin:2px 0 4px}h2{font-size:1rem;margin:0 0 8px}
+p{margin:6px 0 12px}.muted{color:#b4c5c4;font-size:.9rem}a{color:#ffd085}
+.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.eyebrow{text-transform:uppercase;letter-spacing:.08em;color:#ffca74;font-size:.75rem;font-weight:700}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 295px;gap:15px;margin-top:18px}
+.panel{background:#1b2629;border:1px solid #3b5052;border-radius:14px;padding:14px;min-width:0}
+.frame{border:1px solid #3b5052;border-radius:10px;overflow:hidden;background:#090f10;aspect-ratio:1672/941;display:flex;align-items:center;justify-content:center}
+.frame img{width:100%;height:100%;object-fit:contain}.frame img[hidden],.empty[hidden]{display:none}
+.empty{text-align:center;padding:24px;max-width:500px}
+.legend{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px}
+fieldset{margin:0 0 18px;padding:0;border:0}legend{font-weight:700;margin-bottom:8px}
+.choices{display:flex;flex-wrap:wrap;gap:7px}
+button{font:inherit;padding:8px 11px;min-height:40px;border:1px solid #5b7475;background:#29393e;color:#f1f5f2;border-radius:9px;cursor:pointer}
+button:hover{border-color:#ffcd76}button[aria-pressed=true]{background:#ffcd76;color:#1b2729;border-color:#ffcd76;font-weight:700}
+button:focus-visible,a:focus-visible{outline:3px solid #ffcd76;outline-offset:2px}
+.note{padding:11px;background:#29373a;border-radius:9px;font-size:.88rem}
+footer{border-top:1px solid #3b5052;margin-top:20px;padding-top:14px;color:#bdcaca;font-size:.9rem}
+@media(max-width:940px){.grid{grid-template-columns:1fr}.controls{order:-1}}
+</style>
+</head>
+<body><main>
+<header class="top"><div><div class="eyebrow">WorkLands · WL-ART-RPG-001 · Pesquisa visual</div>
+<h1>Cenas, interfaces e assets</h1><p class="muted">16 PNGs publicados · 4 cenas · 4 pares ilustrados · uma imagem por vez</p></div>
+<span class="muted">Mostra pública · Referências conceituais</span></header>
+<div class="grid">
+<section class="panel" aria-label="Imagem selecionada">
+<div class="frame">
+<img id="picture" width="1672" height="941" src="assets/wl-art-rpg-001/cena-01-ui-classic-assets-classic.png" alt="Cena 1: Classic UI e Classic Assets">
+<div class="empty" id="empty" role="status" hidden><h2>Combinação ainda não ilustrada</h2>
+<p>Não existe um PNG registrado para este par UI × Assets. O visualizador não fabrica ou sobrepõe imagens.</p>
+<p>Escolha uma combinação existente nos atalhos.</p></div></div>
+<div class="legend"><div><strong id="scene-title">Cena 1 · Agentes e empresa</strong><div class="muted" id="pair-title">Classic UI + Classic Assets</div><div class="muted" id="autofit" role="status" aria-live="polite"></div></div>
+<a id="original" target="_blank" rel="noopener" href="assets/wl-art-rpg-001/cena-01-ui-classic-assets-classic.png">Abrir PNG original</a></div>
+<p class="muted" id="failed" role="alert" hidden>Imagem indisponível: mantenha este HTML junto das pastas originais do repositório.</p>
+</section>
+<aside class="panel controls" aria-label="Seletores">
+<fieldset><legend>1. Cena</legend><div class="choices" id="scenes"></div></fieldset>
+<fieldset><legend>2. Interface (UI)</legend><div class="choices" id="uis"></div></fieldset>
+<fieldset><legend>3. Tema dos assets</legend><div class="choices" id="assets"></div></fieldset>
+<div class="note">As imagens sao composicoes completas, nao camadas. Ao selecionar uma UI ou familia de assets sem imagem correspondente, o outro seletor se ajusta automaticamente para exibir uma combinacao existente.</div>
+<h2 style="margin-top:16px">Combinações disponíveis</h2><div class="choices" id="presets"></div>
+</aside></div>
+<footer>
+<strong>Decisão vigente para 0.3.0:</strong> somente Classic UI + Classic Assets, mundo pixel art top-down, tiles artísticos 32×32 e acabamento RPG clássico refinado.
+As demais linhas são pesquisa/pós-MVP, sem operação real de agentes.
+<p>Mostra pública para consulta visual. Os mockups não representam o produto em execução nem uma integração operacional com agentes.</p>
+</footer></main>
+<script>
+"use strict";
+(()=>{
+ const scenes=["Agentes e empresa","World Editor","Workflows","Observabilidade"];
+ const images={"classic":{"classic":["cena-01-ui-classic-assets-classic.png","cena-02-ui-classic-assets-classic.png","cena-03-ui-classic-assets-classic.png","cena-04-ui-classic-assets-classic.png"]},"rpg":{"rpg":["dashboard_de_produtividade_worklands.png","editor_de_mundo_no_escritório_aconchegante.png","editor_de_fluxo_do_worklands.png","painel_de_observabilidade_no_escritório_worklands.png"]},"biophilic":{"rpg":["cena-01-ui-biophilic.png","cena-02-ui-biophilic.png","cena-03-ui-biophilic.png","cena-04-ui-biophilic.png"]},"industrial":{"rpg":["cena-01-ui-industrial.png","cena-02-ui-industrial.png","cena-03-ui-industrial.png","cena-04-ui-industrial.png"]}};
+ const title={classic:"Classic",rpg:"RPG",biophilic:"Biophilic",industrial:"Industrial"};
+ const selection={scene:0,ui:"classic",assets:"classic"};
+ const el=id=>document.getElementById(id);
+ const groups=[];
+ function make(group,value,label,fn){
+  const b=document.createElement("button");b.type="button";b.textContent=label;
+  b.addEventListener("click",()=>{fn();paint()});el(group).append(b);
+  groups.push({b,active:()=>group==="scenes"?selection.scene===value:group==="uis"?selection.ui===value:group==="assets"?selection.assets===value:selection.ui+"/"+selection.assets===value});
+ }
+ function feedback(value){el("autofit").textContent=value}
+ scenes.forEach((name,i)=>make("scenes",i,(i+1)+" - "+name,()=>{selection.scene=i;feedback("")}));
+ Object.keys(title).forEach(key=>make("uis",key,title[key],()=>{
+  selection.ui=key;
+  if(!images[key][selection.assets]){
+   selection.assets=Object.keys(images[key])[0];
+   feedback("Assets ajustados automaticamente para "+title[selection.assets]+".");
+  }else{feedback("")}
+ }));
+ ["classic","rpg"].forEach(key=>make("assets",key,title[key],()=>{
+  selection.assets=key;
+  if(!images[selection.ui][key]){
+   selection.ui=Object.keys(images).find(ui=>images[ui][key]);
+   feedback("Interface ajustada automaticamente para "+title[selection.ui]+".");
+  }else{feedback("")}
+ }));
+ [["classic","classic"],["rpg","rpg"],["biophilic","rpg"],["industrial","rpg"]].forEach(pair=>{
+  make("presets",pair.join("/"),title[pair[0]]+" / "+title[pair[1]],()=>{selection.ui=pair[0];selection.assets=pair[1];feedback("")});
+ });
+ const pic=el("picture"),empty=el("empty"),link=el("original"),failed=el("failed");
+ pic.addEventListener("load",()=>{failed.hidden=true});
+ pic.addEventListener("error",()=>{pic.hidden=true;failed.hidden=false});
+ function paint(){
+  groups.forEach(x=>x.b.setAttribute("aria-pressed",String(x.active())));
+  el("scene-title").textContent="Cena "+(selection.scene+1)+" · "+scenes[selection.scene];
+  el("pair-title").textContent=title[selection.ui]+" UI + "+title[selection.assets]+" Assets";
+  const data=images[selection.ui]&&images[selection.ui][selection.assets];
+  const filename=data&&data[selection.scene];
+  empty.hidden=!!filename;pic.hidden=!filename;link.hidden=!filename;failed.hidden=true;
+  if(!filename){pic.removeAttribute("src");link.removeAttribute("href");return}
+  const path="assets/wl-art-rpg-001/"+encodeURIComponent(filename);
+  pic.alt="Cena "+(selection.scene+1)+" · "+scenes[selection.scene]+" · "+title[selection.ui]+" UI + "+title[selection.assets]+" Assets";
+  link.href=path;pic.src=path;
+ }
+ document.addEventListener("keydown",e=>{
+  if(e.altKey||e.ctrlKey||e.metaKey||["INPUT","TEXTAREA"].includes(document.activeElement.tagName))return;
+  if(e.key==="ArrowLeft"||e.key==="ArrowRight"){
+   selection.scene=(selection.scene+(e.key==="ArrowRight"?1:3))%4;feedback("");paint();
+  }
+ });
+ paint();
+})();
+</script>
+<noscript>Para alternar as imagens, ative JavaScript. A cena Classic 1 permanece visível sem ele.</noscript>
+</body></html>
